@@ -10,5 +10,6 @@ public class Main {
         studentsName = input.nextLine();
         System.out.println(guestName);
         System.out.println(studentsName);
+        input.close();
     }
 }
