@@ -11,6 +11,5 @@ public class Main {
         System.out.println(guestName);
         System.out.println(studentsName);
         input.close();
-        //Testing for commit
     }
 }
