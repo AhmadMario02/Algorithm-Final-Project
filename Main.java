@@ -1,25 +1,60 @@
 import java.util.*;
 public class Main {
     public static void main(String[] args) {
-        Student ahmad = new Student("Ahmad", "Yahya");
-        Student ihsan = new Student("Ihsan", "Alawy");
-        Student noor = new Student("Noor", "Yahya");
-        Student yazed = new Student("Yazed", "Nouman");
-        
+        Data data = new Data();
         Scanner input = new Scanner(System.in);
-        String guestName, studentsName;
-        System.out.println("Welcome to Guest Receptionist");
-        System.out.println("Input 1 to continue.\nInput 0 to entering Administator.");
-        int menu = input.nextInt();
-        input.nextLine();
-        if (menu == 1) {    
-            System.out.println("Please insert your name: ");
-            guestName = input.nextLine();
-            System.out.println("Next, please insert your child name: ");
-            studentsName = input.nextLine();
-            System.out.println("Guest Name:\t" + guestName);
-            System.out.println("Child Name:\t" + studentsName);
-            input.close();
-        }
+        String familyName, studentsName;
+        int menu;
+        do {
+            System.out.println("\nWelcome to Guest Receptionist");
+            System.out.println("\nInput 1 to continue.\nInput 2 to entering Administator.");
+            System.out.print("Your input goes here -> ");
+            menu = input.nextInt();
+            input.nextLine();
+            switch (menu) {
+                case 1:
+                System.out.println("Please insert your child name: ");
+                studentsName = input.nextLine();
+                System.out.println("Next, please insert your family name: ");
+                familyName = input.nextLine();
+                System.out.println("__________________________");
+                System.out.println("Child Name: " + studentsName + " Bin " + familyName + "\n");
+                data.call(studentsName);
+                break;
+                
+                case 2:
+                System.out.println("Welcome to Administration Mode.\nSelect Menu:");
+                System.out.println("1. Add Student");
+                System.out.println("2. Add Member of Sibling Group");
+                System.out.println("3. Print All Student");
+                System.out.print("Your input goes here -> ");
+                menu = input.nextInt();
+                switch (menu) {
+                    case 1:
+                    data.addNewStudents();    
+                    break;
+                    case 2:
+
+                    break;
+                    case 3:
+                    System.out.println("Total of all students right now is: " + data.totalStudents());
+                    data.printAllStudents();
+                    break;
+                    default:
+                    break;
+                }
+                break;
+                
+                case 0:
+                System.out.println("Have a nice day!");
+                break;
+
+                default:
+                System.out.println("Invalid input");
+                break;
+            }  
+        } while (menu != 0);
+        input.close();
+        
     }
 }
