@@ -1,3 +1,4 @@
+//This whole program code written by: Ahmad Mario for completing requirement of Data Structure & Algorithm Final Exam.
 import java.util.*;
 public class Main {
     public static void main(String[] args) {
@@ -25,7 +26,7 @@ public class Main {
                 case 2:
                 System.out.println("Welcome to Administration Mode.\nSelect Menu:");
                 System.out.println("1. Add Student");
-                System.out.println("2. Add Member of Sibling Group");
+                System.out.println("2. Delete Student");
                 System.out.println("3. Print All Student");
                 System.out.print("Your input goes here -> ");
                 menu = input.nextInt();

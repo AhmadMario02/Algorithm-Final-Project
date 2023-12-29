@@ -15,12 +15,14 @@ public class SiblingsGroup {
 
     public List<Student> getFamilyList(){
         List<Student> list2 = new ArrayList<>();
-        // System.out.println("Bin " + getFamilyName() +"'s Family:");
         for (Student student : familyList) {
-            // System.out.println("Name: " + student.getName() + " bin " + student.getFamilyName()); 
             list2.add(student);
         }
         return list2;
+    }
+
+    public void addNewFamily(Student s){
+        familyList.add(s);
     }
     
     public void visit(){

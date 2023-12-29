@@ -12,11 +12,20 @@ public class Data {
     Student hasan = new Student("Hasan", "Alawy");
 
     
-    SiblingsGroup nouman = new SiblingsGroup("Nouman", new ArrayList<>(List.of(yazed)));
-    SiblingsGroup yahya = new SiblingsGroup("Yahya", new ArrayList<>(List.of(ahmad, noor)));
-    SiblingsGroup alawy = new SiblingsGroup("Alawy", new ArrayList<>(List.of(ihsan, jafar, hasan)));
+    SiblingsGroup nouman = new SiblingsGroup("Nouman", new ArrayList<>());
+    SiblingsGroup yahya = new SiblingsGroup("Yahya", new ArrayList<>());
+    SiblingsGroup alawy = new SiblingsGroup("Alawy", new ArrayList<>());
 
-    public Data(){
+    public Data(){//setiap mengakses data, Data Main baru di add.
+        alawy.addNewFamily(hasan);
+        alawy.addNewFamily(ihsan);
+        alawy.addNewFamily(jafar);
+
+        yahya.addNewFamily(ahmad);
+        yahya.addNewFamily(noor);
+
+        nouman.addNewFamily(yazed);
+
         allGroup.add(alawy);
         allGroup.add(yahya);
         allGroup.add(nouman);
@@ -29,26 +38,31 @@ public class Data {
     }
 
     public void addNewStudents(){
+        input.nextLine();
         System.out.println("Please input the student name: ");
         String name = input.nextLine();
         System.out.println("Please input the family name: ");
         String family = input.nextLine();
         Student newStudent = new Student(name, family);
         allstudents.add(newStudent);
-        System.out.println("Do you want to add into family group? Y/N");
+        System.out.println("Add into listed family-group? Y/N");
         char select = input.next().charAt(0);
         switch (select) {
             case 'Y':
             int ind = 1;
-            System.out.println("yes, yello");
-            System.out.println("Select the family:");
+            System.out.println("Select the number of family-group:");
             for(SiblingsGroup sg : allGroup){
                 System.out.println(ind + ". " + sg.getFamilyName());
                 ind++;
             }
+            System.out.print("Your input goes here -> ");
+            int indexFamily = input.nextInt();
+            allGroup.get(indexFamily-1).addNewFamily(newStudent);
             break;
             case 'N':
-            System.out.println("no, nigg*");  
+            SiblingsGroup newSGroup = new SiblingsGroup(family, new ArrayList<>());
+            newSGroup.addNewFamily(newStudent);
+            allGroup.add(newSGroup);
             break;
             default:
             System.out.println("Invalid input!");
@@ -67,28 +81,25 @@ public class Data {
     }
 
     public void call(String studentsName){
-        int indexsg = 0, keysg = -1, ks = 0;
-        for (SiblingsGroup sg : allGroup){
-            int indexs = 0, keys = -1;
+        int indexsg = 0, keysg = -1, keys = 0;
+        for (SiblingsGroup sg : allGroup){//cari index anaknya di list
+            int indexs = 0;
             for (Student s : sg.getFamilyList()) {
                 if (s.getName().equalsIgnoreCase(studentsName)) {
-                    // System.out.println("We found it at " + indexs + ", " + indexsg);
-                    keys = ks = indexs;
+                    keys = indexs;
                     keysg = indexsg;
                     break;
                 }
                 indexs++;
-                // System.out.println("Index Student: "+indexs);
             }
             indexsg++;
-            // System.out.println("Index Group: " + indexsg);
         }
 
-        System.out.println(allGroup.get(keysg).getFamilyName() + "'s family visit: " + allGroup.get(keysg).getVisitCount());
         if (allGroup.get(keysg).getVisitCount() < 2) {
-                allGroup.get(keysg).getFamilyList().get(ks).visit();
-                allGroup.get(keysg).visit();
-                System.out.println("Times visited for "+allGroup.get(keysg).getFamilyList().get(ks).getName() + " is: " + allGroup.get(keysg).getFamilyList().get(ks).getVisitCount());
+            allGroup.get(keysg).getFamilyList().get(keys).visit();
+            allGroup.get(keysg).visit();
+            System.out.println(allGroup.get(keysg).getFamilyName() + "'s family visit: " + allGroup.get(keysg).getVisitCount());
+            System.out.println("Times visited for "+allGroup.get(keysg).getFamilyList().get(keys).getName() + " is: " + allGroup.get(keysg).getFamilyList().get(keys).getVisitCount());
         } else System.out.println("Your visit has approach limit");
     }
 }
