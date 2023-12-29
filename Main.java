@@ -35,9 +35,10 @@ public class Main {
                     data.addNewStudents();    
                     break;
                     case 2:
-
+                    data.delete();
                     break;
                     case 3:
+                    System.out.println("______________________________________");
                     System.out.println("Total of all students right now is: " + data.totalStudents());
                     data.printAllStudents();
                     break;

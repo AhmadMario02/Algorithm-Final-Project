@@ -16,7 +16,7 @@ public class Data {
     SiblingsGroup yahya = new SiblingsGroup("Yahya", new ArrayList<>());
     SiblingsGroup alawy = new SiblingsGroup("Alawy", new ArrayList<>());
 
-    public Data(){//setiap mengakses data, Data Main baru di add.
+    public Data(){//setiap mengakses class data, seluruh objek data (student dan sibling-group) baru di add.
         alawy.addNewFamily(hasan);
         alawy.addNewFamily(ihsan);
         alawy.addNewFamily(jafar);
@@ -101,5 +101,53 @@ public class Data {
             System.out.println(allGroup.get(keysg).getFamilyName() + "'s family visit: " + allGroup.get(keysg).getVisitCount());
             System.out.println("Times visited for "+allGroup.get(keysg).getFamilyList().get(keys).getName() + " is: " + allGroup.get(keysg).getFamilyList().get(keys).getVisitCount());
         } else System.out.println("Your visit has approach limit");
+    }
+
+    public void delete(){
+        System.out.print("Please input the student name: ");
+        String name = input.nextLine();
+        System.out.print("Please input " + name + "'s family name: ");
+        String familyName = input.nextLine();
+
+        int indexsg = 0, keysg = 0, keys = 0, indAllS = 0, keyAllS = 0;
+        for (SiblingsGroup sg : allGroup){
+            int indexs = 0;
+            for (Student s : sg.getFamilyList()) {
+                if (s.getName().equalsIgnoreCase(name)) {
+                    keys = indexs;
+                    keysg = indexsg;
+                    break;
+                }
+                indexs++;
+            }
+            indexsg++;
+        }
+
+        for(Student s : allstudents){
+            if (name.equalsIgnoreCase(s.getName()) && familyName.equalsIgnoreCase(s.getFamilyName())) {
+                keyAllS = indAllS;
+            }
+            indAllS++;
+        }
+
+        System.out.println("Are you sure wanna delete " + name + " Bin " + familyName + "? Y/N");
+        char select = input.next().charAt(0);
+        switch (select) {
+            case 'Y':
+            System.out.println("Deleting " + name + " from database.");
+            allGroup.get(keysg).getFamilyList().remove(keys);
+            allstudents.remove(keyAllS);
+
+            if (allGroup.get(keysg).getFamilyList().isEmpty()) {
+                allGroup.remove(keysg);
+            }
+            break;
+            case 'N':
+            System.out.println("Cancelling delete.");
+            break;
+            default:
+            System.out.println("Invalid input!");
+            break;
+        }
     }
 }
