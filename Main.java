@@ -1,25 +1,31 @@
-//This whole program code written by: Ahmad Mario for completing requirement of Data Structure & Algorithm Final Exam.
+/*
+This whole program code written by: 
+Ahmad Mario 
+for completing requirement of: 
+Data Structure & Algorithm Final Exam.
+*/
 import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Data data = new Data();
         Scanner input = new Scanner(System.in);
-        String familyName, studentsName;
+        String guestName, studentsName;
         int menu;
         do {
             System.out.println("\nWelcome to Guest Receptionist");
-            System.out.println("\nInput 1 to continue.\nInput 2 to entering Administator.");
+            System.out.println("\nInput 1 to continue.\nInput 2 to entering Administrator.");
             System.out.print("Your input goes here -> ");
             menu = input.nextInt();
             input.nextLine();
             switch (menu) {
                 case 1:
-                System.out.println("Please insert your child name: ");
+                System.out.println("Please insert your name: ");
+                guestName = input.nextLine();
+                System.out.println("Next, please insert your child name: ");
                 studentsName = input.nextLine();
-                System.out.println("Next, please insert your family name: ");
-                familyName = input.nextLine();
                 System.out.println("__________________________");
-                System.out.println("Child Name: " + studentsName + " Bin " + familyName + "\n");
+                System.out.println("Guest Name: " + guestName);
+                System.out.println("Child Name: " + studentsName + "\n");
                 data.call(studentsName);
                 break;
                 

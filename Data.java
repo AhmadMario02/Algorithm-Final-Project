@@ -38,7 +38,6 @@ public class Data {
     }
 
     public void addNewStudents(){
-        input.nextLine();
         System.out.println("Please input the student name: ");
         String name = input.nextLine();
         System.out.println("Please input the family name: ");
@@ -57,6 +56,7 @@ public class Data {
             }
             System.out.print("Your input goes here -> ");
             int indexFamily = input.nextInt();
+            input.nextLine();
             allGroup.get(indexFamily-1).addNewFamily(newStudent);
             break;
             case 'N':
@@ -132,6 +132,7 @@ public class Data {
 
         System.out.println("Are you sure wanna delete " + name + " Bin " + familyName + "? Y/N");
         char select = input.next().charAt(0);
+        input.nextLine();
         switch (select) {
             case 'Y':
             System.out.println("Deleting " + name + " from database.");
