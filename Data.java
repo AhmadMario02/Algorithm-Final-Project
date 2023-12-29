@@ -10,7 +10,6 @@ public class Data {
     Student ihsan = new Student("Ihsan", "Alawy");
     Student jafar = new Student("Jafar", "Alawy");
     Student hasan = new Student("Hasan", "Alawy");
-
     
     SiblingsGroup nouman = new SiblingsGroup("Nouman", new ArrayList<>());
     SiblingsGroup yahya = new SiblingsGroup("Yahya", new ArrayList<>());
@@ -82,27 +81,30 @@ public class Data {
 
     public void call(String studentsName){
         int indexsg = 0, keysg = -1, keys = 0;
+        boolean foundStatus = false;
         for (SiblingsGroup sg : allGroup){//cari index anaknya di list
             int indexs = 0;
             for (Student s : sg.getFamilyList()) {
                 if (s.getName().equalsIgnoreCase(studentsName)) {
                     keys = indexs;
                     keysg = indexsg;
+                    foundStatus = true;
                     break;
                 }
                 indexs++;
             }
             indexsg++;
         }
-
-        if (allGroup.get(keysg).getVisitCount() < 2) {
-            allGroup.get(keysg).getFamilyList().get(keys).visit();
-            allGroup.get(keysg).visit();
-            System.out.println(allGroup.get(keysg).getFamilyName() + "'s family visit: " + allGroup.get(keysg).getVisitCount());
-            System.out.println("Times visited for "+allGroup.get(keysg).getFamilyList().get(keys).getName() + " is: " + allGroup.get(keysg).getFamilyList().get(keys).getVisitCount());
-        } else System.out.println("Your visit has approach limit");
+        if (foundStatus) {
+            if (allGroup.get(keysg).getVisitCount() < 2) {//pembatasan kunjungan, sebulan hanya boleh berkunjung 2 kali
+                allGroup.get(keysg).getFamilyList().get(keys).visit();
+                allGroup.get(keysg).visit();
+                System.out.println(allGroup.get(keysg).getFamilyName() + "'s family visit: " + allGroup.get(keysg).getVisitCount());
+                System.out.println("Times visited for "+allGroup.get(keysg).getFamilyList().get(keys).getName() + " is: " + allGroup.get(keysg).getFamilyList().get(keys).getVisitCount());
+            } else System.out.println("Your visit has approach limit");
+        } else System.out.println("We didn't found students by name " + studentsName);
     }
-
+        
     public void delete(){
         System.out.print("Please input the student name: ");
         String name = input.nextLine();
@@ -110,45 +112,49 @@ public class Data {
         String familyName = input.nextLine();
 
         int indexsg = 0, keysg = 0, keys = 0, indAllS = 0, keyAllS = 0;
+        boolean searchStatus = false;
         for (SiblingsGroup sg : allGroup){
             int indexs = 0;
             for (Student s : sg.getFamilyList()) {
                 if (s.getName().equalsIgnoreCase(name)) {
                     keys = indexs;
                     keysg = indexsg;
+                    searchStatus = true;
                     break;
                 }
                 indexs++;
             }
             indexsg++;
         }
-
-        for(Student s : allstudents){
-            if (name.equalsIgnoreCase(s.getName()) && familyName.equalsIgnoreCase(s.getFamilyName())) {
-                keyAllS = indAllS;
+        if (searchStatus) {//kalau nama siswa ditemukan, baru dihapus.
+            for(Student s : allstudents){
+                if (name.equalsIgnoreCase(s.getName()) && familyName.equalsIgnoreCase(s.getFamilyName())) {
+                    keyAllS = indAllS;
+                }
+                indAllS++;
             }
-            indAllS++;
-        }
-
-        System.out.println("Are you sure wanna delete " + name + " Bin " + familyName + "? Y/N");
-        char select = input.next().charAt(0);
-        input.nextLine();
-        switch (select) {
-            case 'Y':
-            System.out.println("Deleting " + name + " from database.");
-            allGroup.get(keysg).getFamilyList().remove(keys);
-            allstudents.remove(keyAllS);
-
-            if (allGroup.get(keysg).getFamilyList().isEmpty()) {
-                allGroup.remove(keysg);
+            
+            System.out.println("Are you sure wanna delete " + name + " Bin " + familyName + "? Y/N");
+            char select = input.next().charAt(0);
+            input.nextLine();
+            switch (select) {
+                case 'Y':
+                System.out.println("Deleting " + name + " from database.");
+                System.out.println(allGroup.get(keysg).getFamilyList().get(keys).getName());;
+                allGroup.get(keysg).getFamilyList().remove(keys);
+                allstudents.remove(keyAllS);
+                
+                if (allGroup.get(keysg).getFamilyList().isEmpty()) {
+                    allGroup.remove(keysg);
+                }
+                break;
+                case 'N':
+                System.out.println("Cancelling delete.");
+                break;
+                default:
+                System.out.println("Invalid input!");
+                break;
             }
-            break;
-            case 'N':
-            System.out.println("Cancelling delete.");
-            break;
-            default:
-            System.out.println("Invalid input!");
-            break;
-        }
+        } else System.out.println("We don't find the students name with " + name + " Bin " + familyName);
     }
 }
